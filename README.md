@@ -1,45 +1,77 @@
-# Email Attachment Downloader
+## Uso del Script para Descargar Archivos Adjuntos de Correos Electrónicos en Gmail
 
-Este script de Python te permite automatizar la descarga de archivos adjuntos de correos electrónicos que cumplan con ciertos criterios. En este ejemplo, se asume que estás trabajando con Gmail, pero puedes adaptarlo a otros proveedores de correo electrónico.
+Este script te permitirá conectarte a tu cuenta de Gmail y descargar archivos adjuntos de los correos electrónicos que estén etiquetados con una etiqueta específica. A continuación, se detalla paso a paso cómo utilizar el script. Es importante tener en cuenta que debes cumplir con varios requisitos previos antes de proceder.
 
-## Requisitos
+### Requisitos Previos
 
-- Python 3.x
-- [SimpleGmail](https://github.com/abhishekraiyani/SimpleGmail) (una biblioteca para acceder a correos electrónicos de Gmail)
-- Cuenta de Gmail y la configuración del servicio Gmail API.
+#### 1. Gmail API
 
-## Configuración
+Para utilizar este script, necesitas configurar la Gmail API y obtener las credenciales correspondientes (token y secret_key). Aquí hay un resumen de los pasos a seguir:
 
-1. Instala la biblioteca SimpleGmail usando pip:
+- Accede a la [Consola de Desarrolladores de Google](https://console.developers.google.com/).
+- Crea un nuevo proyecto o selecciona un proyecto existente.
+- En el panel de control del proyecto, ve a "API y servicios" y haz clic en "Biblioteca".
+- Busca "Gmail API" y actívala para tu proyecto.
+- En "Credenciales", crea una nueva credencial de tipo "ID de cliente OAuth".
+- Configura la aplicación cliente OAuth para una aplicación de escritorio.
+- Descarga el archivo JSON de las credenciales. Asegúrate de que este archivo esté en el mismo directorio que tu script y que lo renombres como `client_secret.json`.
 
+#### 2. Python
 
-2. Configuración del servicio Gmail API:
-- Antes de usar este script, es necesario habilitar la API de Gmail y configurar credenciales de acceso. Puedes seguir los pasos detallados en la [Guía de Configuración del Servicio Gmail API](https://developers.google.com/gmail/api/quickstart) para obtener el archivo `credentials.json`.
-- Asegúrate de guardar el archivo `credentials.json` en el mismo directorio donde se encuentra el script `email_attachment_downloader.py`.
+Asegúrate de tener Python 3.x instalado en tu sistema. Puedes descargarlo desde el [sitio web oficial de Python](https://www.python.org/downloads/).
 
-## Uso
+#### 3. Instalación de Bibliotecas
 
-1. Clona o descarga este repositorio.
+Instala la biblioteca `simplegmail` utilizando `pip`. Abre una terminal o línea de comandos y ejecuta el siguiente comando:
 
-2. Abre el archivo `email_attachment_downloader.py` en tu editor de código favorito.
+```sh
+pip install simplegmail
+```
 
-3. Personaliza el script:
-- Modifica `query_params` para definir tus criterios de búsqueda de correos electrónicos. Por ejemplo, puedes cambiar la etiqueta o cualquier otro parámetro que desees.
-- Ajusta la ruta en la línea que guarda los archivos adjuntos para que se almacenen en el directorio deseado en tu sistema.
+### Configuración
 
-4. Ejecuta el script:
+1. Abre el script en tu editor de código preferido.
 
+2. En el script, localiza la siguiente línea:
 
-El script buscará correos electrónicos que coincidan con tus criterios y descargará los archivos adjuntos (en este ejemplo, archivos PDF) en la ubicación especificada.
+   ```python
+   "label": "Tu_Etiqueta_Aquí",  # Modifica "Tu_Etiqueta_Aquí" por la etiqueta deseada.
+   ```
 
-## Contribuciones
+   Reemplaza `"Tu_Etiqueta_Aquí"` con la etiqueta real que deseas utilizar para filtrar los correos electrónicos que contienen archivos adjuntos.
 
-¡Las contribuciones son bienvenidas! Si deseas mejorar este script o agregar nuevas funcionalidades, no dudes en hacer una solicitud de extracción.
+### Ejecución del Script
 
-## Agradecimientos
+1. Abre una terminal o línea de comandos y navega al directorio donde se encuentra el script.
 
-- Este script utiliza la biblioteca [SimpleGmail](https://github.com/abhishekraiyani/SimpleGmail) para acceder a correos electrónicos de Gmail. Gracias a su autor y a la comunidad de código abierto.
+2. Ejecuta el script mediante el siguiente comando:
 
-## Licencia
+```sh
+email_attachment_downloader.py
+```
 
-Este proyecto se distribuye bajo la [Licencia MIT](LICENSE).
+   Asegúrate de que `email_attachment_downloader.py` sea el nombre real de tu archivo de script.
+
+3. El script se conectará a tu cuenta de Gmail y buscará correos electrónicos etiquetados con la etiqueta que especificaste.
+
+4. Si se encuentran correos electrónicos que coinciden con la etiqueta:
+
+   - El script imprimirá información sobre el correo electrónico más reciente, incluyendo el destinatario, el remitente, el asunto, la fecha y una vista previa del contenido.
+
+   - Luego, verificará si el correo electrónico contiene archivos PDF adjuntos. Si es así, los guardará en la ubicación especificada en la línea:
+
+     ```python
+     attachment.save('C:\\Users\\user\\dir\\dir\\dir\\' + attachment.filename, overwrite=True)
+     ```
+
+     Asegúrate de reemplazar `C:\\Users\\user\\dir\\dir\\dir\\` con la ubicación de tu preferencia.
+
+5. Si no se encuentran correos electrónicos que coincidan con la etiqueta, el script imprimirá el mensaje: "No se encontraron correos electrónicos en la etiqueta 'Tu_Etiqueta_Aquí'."
+
+### Notas Adicionales
+
+- Mantén tus credenciales de Gmail API (token y secret_key) seguras y no las compartas con nadie más.
+
+- Puedes automatizar la ejecución de este script utilizando programación de tareas o un gestor de tareas, como `cron` en sistemas Unix.
+
+- Este script se proporciona tal cual y es responsabilidad del usuario adaptarlo y utilizarlo de acuerdo a sus necesidades y requerimientos.
